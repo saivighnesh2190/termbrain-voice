@@ -1,80 +1,53 @@
-# Demo video script (about 2 minutes 30 seconds)
+# Demo video script: 60-second cut
 
-Record with OBS or KDE's Spectacle screen recorder (1080p, terminal font 16 pt or bigger, mic audio plus desktop audio so Timbre's voice is captured).
+The submission video for the Gnani challenge. Target length **0:58**, so it stays under a minute after export. One idea only: you speak Telugu-English to your laptop, it finds the real cause from local logs and answers out loud, and your logs never leave the machine.
 
-## Before you hit record
+The longer walkthrough is in [DEMO_SCRIPT_FULL.md](DEMO_SCRIPT_FULL.md).
+
+## Setup (not recorded)
 
 ```bash
 source .env
-termbrain-voice check                 # all four rows green
-rfkill block wifi                     # staged problem for scene 2 (switch to phone hotspot over USB or Ethernet so Gnani is reachable)
+termbrain-voice check                       # all four rows green
+termbrain-voice ask --text "hello" --no-speak   # warm the local model so the first real call is faster
+rfkill block wifi                           # the staged problem; stay online via USB tether or Ethernet so Gnani is reachable
 clear
 ```
 
-Scene 2 needs internet for Gnani while WiFi looks "broken". Options: USB-tether your phone, or use Ethernet. If neither is handy, use the `pactl` mute scene below instead.
+- Terminal font 18 pt or bigger, dark theme, KDE tray visible (the WiFi icon is the payoff).
+- Record screen and mic together in OBS at 1080p. Capture desktop audio too, so Timbre's voice is in the video.
+- Record one full, uncut take first. You'll trim it to 60 seconds in the edit.
 
----
+## The cut
 
-## Scene 1: the hook (0:00 to 0:15)
+| Time | On screen | Audio |
+| --- | --- | --- |
+| 0:00 to 0:05 | Terminal. Caption: **"My Linux laptop, in my language."** | You: "Linux problem వస్తే, logs చదవక్కర్లేదు. Just చెప్పండి." |
+| 0:05 to 0:13 | Type `termbrain-voice ask`, speak, press Enter. | You, naturally code-mixed: **"నా WiFi పని చేయడం లేదు, networks కూడా కనిపించడం లేదు."** |
+| 0:13 to 0:20 | *Heard* panel shows your Telugu with "WiFi" and "networks" kept in English. Caption: **"Gnani Prisma v3.0, code-mix mode"**. Then the *Topics* line. | You: "Prisma got my Telugu and English, both. Now it reads my laptop's logs, locally." |
+| 0:20 to 0:22 | **Jump cut** over the local model's thinking time. Caption: **"⏩ local Gemma on CPU, x s"** (put your real number). | None. |
+| 0:22 to 0:35 | Answer panel; the cause line says WiFi is soft-blocked. Caption: **"Gnani Timbre v3.0"**. | **Timbre speaks the answer.** Don't talk over it. |
+| 0:35 to 0:43 | Type `rfkill unblock wifi`. Networks reappear in the KDE tray. | You: "Real cause, real fix. And it never runs commands by itself." |
+| 0:43 to 0:52 | The last two lines of output (what went to the cloud). Optional 2-second flash of `termbrain-voice evidence` showing `[MAC]` and `[SSID]` redactions. | You: "Only my voice and this one-line answer touched the cloud. My logs stayed on this laptop." |
+| 0:52 to 0:58 | End card: **TermBrain Voice** · Gnani Prisma + Timbre · local Ollama · github.com/saivighnesh2190/termbrain-voice · #GnaniAI #GreatIndianAIInternshipChallenge | You: "TermBrain Voice. Built with Gnani. Thanks!" |
 
-**On screen:** terminal, big font. Your face cam in a corner if you like.
+## Subtitles
 
-**Say (Telugu-English, natural):**
-> "Linux లో problem వస్తే మనం journalctl logs చదివి, English లో Google చేయాలి. అదే laptop కి మన భాషలో చెప్తే? This is TermBrain Voice."
+Burn in English subtitles for every Telugu line so any judge can follow:
 
-## Scene 2: Telugu problem, Telugu answer (0:15 to 1:00)
+- "Linux problem వస్తే, logs చదవక్కర్లేదు. Just చెప్పండి." → "Got a Linux problem? No need to read logs. Just say it."
+- "నా WiFi పని చేయడం లేదు, networks కూడా కనిపించడం లేదు." → "My WiFi isn't working, I can't even see networks."
+- Subtitle Timbre's answer with the text the answer panel shows.
 
-**Type:** `termbrain-voice ask`
+## Editing in Kdenlive (about 15 minutes)
 
-**Say into the mic, then press Enter:**
-> "నా WiFi పని చేయడం లేదు, networks కూడా కనిపించడం లేదు."
+1. `sudo pacman -S kdenlive` if it isn't installed.
+2. Import the full take. Cut the local model's wait down to about 2 seconds and add the "⏩" caption with the real seconds, so the speed-up is disclosed, not hidden.
+3. Trim pauses before and after each line. If it's still over 0:58, shorten the 0:43 privacy shot first; never cut the Telugu question or Timbre's answer.
+4. Add the captions and end card, then export H.264 MP4, 1080p, 30 fps. Check the final duration is under 1:00.
 
-**Point at, as each panel appears:**
-1. "Gnani Prisma heard me, Telugu with English words, in under a second." (Heard panel)
-2. "It picked the network topic and read seven things from my laptop: rfkill, NetworkManager, the journal. All locally." (Topics line)
-3. Let Timbre speak the answer. Don't talk over it.
-4. "It found the actual cause: WiFi is soft-blocked. It suggests a read-only check first, and marks the fix as review first. It never runs anything itself."
+## If something goes wrong on the take
 
-**Then run the fix live:** `rfkill unblock wifi` and show networks coming back in the KDE tray. This is the moment judges remember.
-
-## Scene 3: privacy, proved (1:00 to 1:30)
-
-**Point at the last two lines:**
-> "Only two things went to the cloud: my voice clip to Prisma, and this one-line answer to Timbre. My logs, MAC address and network name never left the machine."
-
-**Type:** `termbrain-voice evidence "wifi not working"`
-> "And this shows exactly what it reads. MAC addresses, IPs and my WiFi name are redacted."
-
-## Scene 4: English and code-mixed, plus the safety guard (1:30 to 2:05)
-
-**Type:** `termbrain-voice ask --reply-lang en-IN`
-
-**Say:**
-> "Laptop చాలా slow గా ఉంది, fan full sound చేస్తోంది."
-
-**Point at:** "It switched to performance evidence, load, memory and top processes, and answered in English because I asked it to. Same pipeline, any of Gnani's ten languages."
-
-If the steps table ever shows "Withheld N destructive suggestion(s)", point at it: "If the model suggests something dangerous like rm -rf, the guard hides it."
-
-## Scene 5: engineering close (2:05 to 2:30)
-
-**Type:** `pytest -q && python evals/run_router_eval.py`
-> "Fifty tests, a Telugu and English router eval, CI on every push. Gnani's Prisma and Timbre for voice, a local Gemma model for reasoning, RAG over curated Manjaro runbooks. Code's on GitHub. Thanks, Gnani!"
-
----
-
-## Backup scene (no second network)
-
-```bash
-pactl set-sink-mute @DEFAULT_SINK@ 1    # stage it
-termbrain-voice ask --no-speak          # you can't hear Timbre while muted, so read the panel
-```
-Say: "సౌండ్ రావడం లేదు, speakers నుంచి ఏమీ వినిపించడం లేదు." Then unmute with `pactl set-sink-mute @DEFAULT_SINK@ 0` and replay the saved reply with `pw-play` on the path shown, so the audience hears Timbre.
-
-Note: a muted sink may not show in the evidence the model sees, so the answer may be "services are healthy, check the output device and volume". That is honest grounded behaviour; say so on camera.
-
-## Recording tips
-
-- Do one dry run first: first-call latency on Ollama is higher while the model loads. Run `termbrain-voice ask --text "hello" --no-speak` once before recording to warm it.
-- Keep each clip under 30 seconds of speech (Prisma REST limit).
-- If a take goes wrong, the session JSON in `~/.local/share/termbrain-voice/sessions/` has every timing for your write-up.
+- Prisma mishears a word: re-record just that line; keep the code-mixed phrasing, since that's the point of the video.
+- Timbre's answer runs past 13 seconds: keep it whole and shorten the privacy shot instead.
+- No second network for the WiFi scene: use the muted-speaker backup scene from [DEMO_SCRIPT_FULL.md](DEMO_SCRIPT_FULL.md) and keep the same timings.

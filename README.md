@@ -135,7 +135,7 @@ tests/          pytest suite (no network)
 
 ## Docs
 
-- [Demo video script](docs/DEMO_SCRIPT.md)
+- [Demo video script, 60-second cut](docs/DEMO_SCRIPT.md) ([full 2.5-minute walkthrough](docs/DEMO_SCRIPT_FULL.md))
 - [Challenge write-up and post draft](docs/SUBMISSION.md)
 
 ## License

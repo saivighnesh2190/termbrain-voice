@@ -3,6 +3,8 @@
 **Team:** Nekkanti Sai Vighnesh (B.Tech CSE, KL University)
 **Repo:** https://github.com/saivighnesh2190/termbrain-voice
 **Gnani models:** Prisma v3.0 (speech-to-text), Timbre v3.0 (text-to-speech)
+**Award category:** Mixed Vibes Award (best code-mixed voice build)
+**Demo video:** 60 seconds (script: `docs/DEMO_SCRIPT.md`)
 
 ## Problem
 
@@ -17,6 +19,17 @@ A voice-first assistant for the Linux terminal. You describe the problem in Telu
 - **Prisma v3.0** via `POST /stt/v3`: `language_code=te-IN,en-IN` as hints, `format=codemix` so English tech terms stay in Latin script inside Telugu speech, `keyterms` with 37 Linux terms and a `topic` sentence to bias recognition of words like pacman, GRUB and PipeWire. `detected_language_code` decides the reply language.
 - **Timbre v3.0** via `POST /api/v1/tts/inference`: every v3.0 voice speaks all ten languages, so one voice (default Shivani) answers in whatever language the user spoke.
 - Client handles every documented error shape (STT envelope, auth/rate-limit `detail`, 422 validation, 504 upstream timeout) and backs off on the one-active-request 429.
+
+## Award category: Mixed Vibes
+
+Each entry can win at most one award, so this entry is nominated for **Mixed Vibes**, the award for the best code-mixed voice build. Code-mixing isn't a feature added on top here; the whole product rests on it:
+
+- Users describe problems the way Telugu speakers actually talk about computers: Telugu sentences full of English tech words ("నా WiFi పని చేయడం లేదు", "Laptop చాలా slow గా ఉంది").
+- Prisma runs in `format=codemix` with Telugu and English hints, so English terms stay in Latin script inside Telugu speech instead of being transliterated, and Linux keyterms (pacman, GRUB, PipeWire) are biased in.
+- The router is built and evaluated on code-mixed speech: 22 of its 31 evaluation cases are Telugu-English code-mixed.
+- The reply follows the user's language, and Timbre speaks it in the same voice whether the answer is Telugu, English or mixed.
+
+The 60-second demo is built around one code-mixed request and its spoken answer, so it is also suitable for the Demo Day Drop award if the judges prefer to consider it there.
 
 ## Model details (local)
 
@@ -42,9 +55,9 @@ Streaming Prisma over WebSocket for longer, interruptible conversations; multi-t
 
 ## LinkedIn / X post (draft)
 
-I built TermBrain Voice for the #GnaniAI Great Indian AI Internship Challenge 🎙️🐧
+I built TermBrain Voice for Gnani AI's Great Indian AI Internship Challenge 🎙️🐧
 
-Tell your Linux laptop what's wrong in Telugu, English or both, and it tells you the fix out loud.
+Tell your Linux laptop what's wrong in Telugu, English or the Telugu-English mix we actually speak, and it tells you the fix out loud.
 
 How it works:
 • Gnani Prisma v3.0 turns my code-mixed Telugu into text (codemix mode + Linux keyterms, so "pacman" stays pacman)
@@ -56,6 +69,8 @@ My logs never leave the laptop. Only the voice clip and the one-line answer touc
 
 50 tests, a Telugu/English router eval and CI on every push.
 
-Demo + code: https://github.com/saivighnesh2190/termbrain-voice
+60-second demo in this post. Code: https://github.com/saivighnesh2190/termbrain-voice
 
-@Gnani.ai #VoiceAI #IndicAI #Linux #LocalLLM #RAG
+@Gnani AI #GnaniAI #GreatIndianAIInternshipChallenge #GreatIndianAIInterns #VoiceAI #IndicAI #Linux #LocalLLM
+
+*Attach the 60-second video to the post itself (LinkedIn and X both), tag Gnani AI's official account, and nominate one post per platform in the submission form.*
