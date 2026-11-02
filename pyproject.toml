@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "termbrain-voice"
+version = "0.1.0"
+description = "Talk to your Linux box in Telugu or English. Gnani Prisma hears you, a local LLM reads your logs, Gnani Timbre answers back."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Nekkanti Sai Vighnesh" }]
+requires-python = ">=3.9"
+dependencies = [
+  "typer>=0.12",
+  "rich>=13",
+  "requests>=2.31",
+  "ollama>=0.4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+termbrain-voice = "termbrain_voice.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["termbrain_voice*"]
+
+[tool.setuptools.package-data]
+termbrain_voice = ["kb/*.md"]
+
+[tool.ruff]
+line-length = 130
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "I"]
+ignore = ["B008"]  # typer.Option defaults are the idiomatic Typer style
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

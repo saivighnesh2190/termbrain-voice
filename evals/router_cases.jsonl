@@ -1,0 +1,31 @@
+{"text": "నా WiFi పని చేయడం లేదు, connect అవ్వడం లేదు", "lang": "te-IN", "expect": "network"}
+{"text": "laptop లో internet రావడం లేదు", "lang": "te-IN", "expect": "network"}
+{"text": "వైఫై networks అసలు కనిపించడం లేదు", "lang": "te-IN", "expect": "network"}
+{"text": "hostel WiFi connect అయింది కానీ websites open అవ్వడం లేదు", "lang": "te-IN", "expect": "network"}
+{"text": "my wifi keeps disconnecting every few minutes", "lang": "en-IN", "expect": "network"}
+{"text": "సౌండ్ రావడం లేదు, speakers నుంచి ఏమీ వినిపించడం లేదు", "lang": "te-IN", "expect": "audio"}
+{"text": "headphones పెడితే audio రావడం లేదు", "lang": "te-IN", "expect": "audio"}
+{"text": "no sound after the update", "lang": "en-IN", "expect": "audio"}
+{"text": "mic పని చేయడం లేదు Google Meet లో", "lang": "te-IN", "expect": "audio"}
+{"text": "బ్లూటూత్ on అవ్వడం లేదు", "lang": "te-IN", "expect": "bluetooth"}
+{"text": "my bluetooth earbuds won't pair", "lang": "en-IN", "expect": "bluetooth"}
+{"text": "laptop boot అవ్వడానికి చాలా time పడుతోంది", "lang": "te-IN", "expect": "boot"}
+{"text": "update తర్వాత black screen వస్తోంది", "lang": "te-IN", "expect": "boot"}
+{"text": "grub menu lo Windows కనిపించడం లేదు", "lang": "te-IN", "expect": "boot"}
+{"text": "startup is really slow since yesterday", "lang": "en-IN", "expect": "boot"}
+{"text": "laptop చాలా slow గా ఉంది, hang అవుతోంది", "lang": "te-IN", "expect": "performance"}
+{"text": "system నెమ్మదిగా ఉంది, fan చాలా sound చేస్తోంది", "lang": "te-IN", "expect": "performance"}
+{"text": "everything freezes when I open Chrome", "lang": "en-IN", "expect": "performance"}
+{"text": "pacman update fail అయింది", "lang": "te-IN", "expect": "packages"}
+{"text": "అప్‌డేట్ చేస్తుంటే error వస్తోంది, failed to retrieve some files అంటోంది", "lang": "te-IN", "expect": "packages"}
+{"text": "yay తో AUR package install అవ్వడం లేదు", "lang": "te-IN", "expect": "packages"}
+{"text": "pacnew files ఏమి చేయాలి", "lang": "te-IN", "expect": "packages"}
+{"text": "the system upgrade says breaks dependency", "lang": "en-IN", "expect": "packages"}
+{"text": "disk ఫుల్ అయిపోయింది అంటోంది", "lang": "te-IN", "expect": "disk"}
+{"text": "storage space సరిపోవడం లేదు", "lang": "te-IN", "expect": "disk"}
+{"text": "no space left on device error", "lang": "en-IN", "expect": "disk"}
+{"text": "బ్యాటరీ చాలా తొందరగా అయిపోతోంది", "lang": "te-IN", "expect": "power"}
+{"text": "charger పెట్టినా charging అవ్వడం లేదు", "lang": "te-IN", "expect": "power"}
+{"text": "battery drains overnight in sleep", "lang": "en-IN", "expect": "power"}
+{"text": "ఏదో error వస్తోంది, ఏం అయిందో అర్థం కావడం లేదు", "lang": "te-IN", "expect": "general"}
+{"text": "something is wrong with my laptop", "lang": "en-IN", "expect": "general"}
