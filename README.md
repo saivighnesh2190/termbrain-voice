@@ -106,7 +106,7 @@ pytest -q                       # 50 tests: Gnani request/response shapes, route
 python evals/run_router_eval.py # router top-1 accuracy on Telugu/English/code-mixed problem statements
 ```
 
-Router: **31/31 top-1** on `evals/router_cases.jsonl` (22 Telugu code-mixed, 9 English), written to mirror Prisma `codemix` output. This is a development set: one miss on the first run ("freezes") was fixed by adding verb inflections, so treat it as a regression test rather than a held-out score. CI runs tests, lint and the eval on Python 3.9 and 3.12.
+Router: **31/31 top-1** on `evals/router_cases.jsonl` (22 Telugu code-mixed, 9 English), written to mirror Prisma `codemix` output. This is a development set: one miss on the first run ("freezes") was fixed by adding verb inflections, so treat it as a regression test rather than a held-out score. CI runs tests, lint and the eval on Python 3.10 and 3.13.
 
 Not covered by CI: live Gnani calls and live Ollama generation (they need a key and a model). The Gnani client is tested against the documented request fields and every documented error shape, including the 429 one-active-request limit with backoff.
 

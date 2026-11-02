@@ -30,7 +30,7 @@ Only the audio clip and the final 1 to 3 sentence answer go to Gnani. Logs stay 
 
 ## Results
 
-- 50 automated tests, ruff-clean, CI on Python 3.9 and 3.12.
+- 50 automated tests, ruff-clean, CI on Python 3.10 and 3.13.
 - Router eval: 31/31 (22 Telugu code-mixed, 9 English), development set.
 - Per-stage latency (STT, evidence, LLM, TTS) printed every run and saved per session. *(Fill in your measured numbers after recording: e.g. STT 0.x s, evidence 0.x s, LLM x s on i7 U-series CPU, TTS 0.x s.)*
 
