@@ -24,7 +24,7 @@ clear
 | --- | --- | --- |
 | 0:00 to 0:05 | Terminal. Caption: **"My Linux laptop, in my language."** | You: "Linux problem వస్తే, logs చదవక్కర్లేదు. Just చెప్పండి." |
 | 0:05 to 0:13 | Type `termbrain-voice ask`, speak, press Enter. | You, naturally code-mixed: **"నా WiFi పని చేయడం లేదు, networks కూడా కనిపించడం లేదు."** |
-| 0:13 to 0:20 | *Heard* panel shows your Telugu with "WiFi" and "networks" kept in English. Caption: **"Gnani Prisma v3.0, code-mix mode"**. Then the *Topics* line. | You: "Prisma got my Telugu and English, both. Now it reads my laptop's logs, locally." |
+| 0:13 to 0:20 | *Heard* panel shows your code-mixed sentence. Prisma may write some English words in Telugu script, for example వైఫై; that's fine, the router reads both. Caption: **"Gnani Prisma v3.0, code-mix mode"**. Then the *Topics* line. | You: "Prisma got my Telugu-English mix. Now it reads my laptop's logs, locally." |
 | 0:20 to 0:22 | **Jump cut** over the local model's thinking time. Caption: **"⏩ local Gemma on CPU, x s"** (put your real number). | None. |
 | 0:22 to 0:35 | Answer panel; the cause line says WiFi is soft-blocked. Caption: **"Gnani Timbre v3.0"**. | **Timbre speaks the answer.** Don't talk over it. |
 | 0:35 to 0:43 | Type `rfkill unblock wifi`. Networks reappear in the KDE tray. | You: "Real cause, real fix. And it never runs commands by itself." |

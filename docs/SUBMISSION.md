@@ -61,7 +61,7 @@ I built TermBrain Voice for Gnani AI's Great Indian AI Internship Challenge 🎙
 Tell your Linux laptop what's wrong in Telugu, English or the Telugu-English mix we actually speak, and it tells you the fix out loud.
 
 How it works:
-• Gnani Prisma v3.0 turns my code-mixed Telugu into text (codemix mode + Linux keyterms, so "pacman" stays pacman)
+• Gnani Prisma v3.0 turns my code-mixed Telugu into text (codemix mode plus Linux keyterm hints)
 • The app reads only the relevant logs on my machine, read-only, and redacts MACs, IPs and WiFi names
 • A local Gemma model on Ollama reasons over that evidence plus curated Manjaro runbooks
 • Gnani Timbre v3.0 speaks the answer back in my language
