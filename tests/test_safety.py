@@ -36,3 +36,17 @@ def test_triage_splits_and_labels():
     ])
     assert [k["safety"] for k in kept] == [SAFE, "info"]
     assert len(blocked) == 1 and blocked[0]["safety"] == BLOCKED
+
+
+def test_partial_upgrade_is_blocked():
+    from termbrain_voice.safety import BLOCKED, CHANGES, classify
+
+    # Seen live from gemma3:1b on 2026-11-07: a partial upgrade suggested as a fix.
+    assert classify("sudo pacman -Sy manjaro-keyring archlinux-keyring") == BLOCKED
+    assert classify("sudo pacman -Syy firefox") == BLOCKED
+    assert classify("yay -Sy some-aur-pkg") == BLOCKED
+    # Full upgrades and the documented keyring fix stay allowed (review first).
+    assert classify("sudo pacman -Syu") == CHANGES
+    assert classify("sudo pacman -Syyu") == CHANGES
+    assert classify("sudo pacman -Sy archlinux-keyring manjaro-keyring && sudo pacman -Su") == CHANGES
+    assert classify("sudo pacman -S firefox") == CHANGES

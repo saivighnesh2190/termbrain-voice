@@ -29,3 +29,7 @@
 {"text": "battery drains overnight in sleep", "lang": "en-IN", "expect": "power"}
 {"text": "ఏదో error వస్తోంది, ఏం అయిందో అర్థం కావడం లేదు", "lang": "te-IN", "expect": "general"}
 {"text": "something is wrong with my laptop", "lang": "en-IN", "expect": "general"}
+{"text": "నా లాప్‌టాప్‌లో వైఫై కనెక్ట్ అవ్వట్లేదు, NetworkManager లాగ్స్ చెక్ చేయి.", "lang": "te-IN", "expect": "network", "source": "live Prisma v3 transcript of Timbre audio, 2026-11-07"}
+{"text": "అప్‌డేట్ తర్వాత ల్యాప్‌టాప్ బూట్ అవ్వట్లేదు, బ్లాక్ స్క్రీన్ వస్తోంది.", "lang": "te-IN", "expect": "boot", "source": "live Prisma v3 transcript of Timbre audio, 2026-11-07"}
+{"text": "speakers లో sound రావట్లేదు, headphones లో మాత్రం వస్తోంది.", "lang": "te-IN", "expect": "audio", "source": "live Prisma v3 transcript of Timbre audio, 2026-11-07"}
+{"text": "disk full అయిపోయింది, space ఎక్కడ పోయిందో చూడు.", "lang": "te-IN", "expect": "disk", "source": "live Prisma v3 transcript of Timbre audio, 2026-11-07"}

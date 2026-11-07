@@ -55,7 +55,7 @@ Your logs never leave the laptop. Every session records exactly what was sent wh
 
 Design choices worth noting:
 
-- **Prisma `codemix` + keyterm prompting.** Indian users say "నా WiFi పని చేయడం లేదు", not pure Telugu. `codemix` keeps English tech words in Latin script, so the router still sees `wifi`. A list of 37 Linux keyterms (pacman, GRUB, PipeWire, journalctl…) is sent with each clip so Prisma doesn't hear "Pac-Man". Hint languages default to `te-IN,en-IN` and are hints, not a lock.
+- **Prisma `codemix` + keyterm prompting.** Indian users say "నా WiFi పని చేయడం లేదు", not pure Telugu. `codemix` keeps many English tech words in Latin script, but not all: in live tests Prisma wrote "sound", "speakers" and "disk" in Latin and transliterated "WiFi", "laptop" and "boot" into Telugu script (వైఫై, ల్యాప్‌టాప్, బూట్). The router therefore matches both spellings, and real Prisma transcripts are part of the eval. A list of 37 Linux keyterms (pacman, GRUB, PipeWire, journalctl…) is sent with each clip so Prisma doesn't hear "Pac-Man". Hint languages default to `te-IN,en-IN` and are hints, not a lock.
 - **Deterministic router, not an LLM.** Mapping speech to evidence with keywords in Telugu and English is instant on a CPU-only laptop, can't invent a command, and is measurable (see Evaluation).
 - **Read-only evidence with fixed argv.** No shell, no user text in commands, 8 s timeouts, graceful "not installed" when a tool is missing.
 - **Grounded answers.** The local model gets real command output plus the top 3 runbooks, must answer in JSON and cite runbook ids. Invented citations are dropped.
@@ -97,18 +97,20 @@ termbrain-voice ask
 
 Config via environment: `GNANI_API_KEY`, `TBV_OLLAMA_MODEL` (default `gemma3:4b`), `TBV_TTS_VOICE` (default `Shivani`), `TBV_STT_LANGS` (default `te-IN,en-IN`), `TBV_STT_FORMAT` (default `codemix`), `OLLAMA_HOST`.
 
-**Model choice.** `gemma3:4b` is the default because it handles Telugu far better than `llama3.2:3b` while still running on a 16 GB CPU-only laptop. If Telugu replies are weak on your hardware, use `--reply-lang en-IN` with any smaller model.
+**Model choice.** `gemma3:4b` is the default: Gemma 3 is trained for multilingual use and the 4B model still fits a 16 GB CPU-only laptop. (A side-by-side Telugu comparison with other small models hasn't been run yet.) `gemma3:1b` works too but gives weaker, more repetitive Telugu answers.
+
+**Behind a proxy?** The client talks to a local Ollama directly and ignores `HTTP(S)_PROXY` for localhost, so campus or corporate proxies don't break it. If Telugu replies are weak on your hardware, use `--reply-lang en-IN` with any smaller model.
 
 ## Evaluation
 
 ```bash
-pytest -q                       # 50 tests: Gnani request/response shapes, router, redaction, safety, RAG, pipeline
+pytest -q                       # 52 tests: Gnani request/response shapes, router, redaction, safety, RAG, pipeline
 python evals/run_router_eval.py # router top-1 accuracy on Telugu/English/code-mixed problem statements
 ```
 
-Router: **31/31 top-1** on `evals/router_cases.jsonl` (22 Telugu code-mixed, 9 English), written to mirror Prisma `codemix` output. This is a development set: one miss on the first run ("freezes") was fixed by adding verb inflections, so treat it as a regression test rather than a held-out score. CI runs tests, lint and the eval on Python 3.10 and 3.13.
+Router: **35/35 top-1** on `evals/router_cases.jsonl` (26 Telugu code-mixed, 9 English). 31 cases were written to mirror Prisma `codemix` output, and 4 are real Prisma v3.0 transcripts captured on 2026-11-07. This is a development set: one miss on the first run ("freezes") was fixed by adding verb inflections, so treat it as a regression test rather than a held-out score. CI runs tests, lint and the eval on Python 3.10 and 3.13.
 
-Not covered by CI: live Gnani calls and live Ollama generation (they need a key and a model). The Gnani client is tested against the documented request fields and every documented error shape, including the 429 one-active-request limit with backoff.
+Not covered by CI: live Gnani calls and live Ollama generation (they need a key and a model). Both were run end to end on 2026-11-07: Timbre-generated Telugu clips went through `ask --audio`, then Prisma, evidence, Ollama and Timbre. The test audio was synthetic Timbre speech, not a human voice. Measured Gnani latency from a cloud sandbox in India: Prisma 0.5 to 1.2 s per clip, Timbre 1.4 to 4.2 s depending on answer length. Local model time depends on your CPU. The Gnani client is tested against the documented request fields and every documented error shape, including the 429 one-active-request limit with backoff.
 
 ## Project structure
 

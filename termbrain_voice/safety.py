@@ -37,6 +37,13 @@ _READONLY_PREFIXES = [
 ]
 
 
+# Partial upgrade: refresh the sync DB (-Sy/-Syy) and install packages without -u.
+# Unsupported on Arch/Manjaro and a classic way to break a system. Allowed only
+# when the same command line finishes the job with a full -Su (the keyring fix).
+_PARTIAL_UPGRADE = re.compile(r"\b(pacman|yay|paru)\s+-S(?=[a-tv-z]*y)[a-tv-z]+\s+[^-\s]")
+_FULL_UPGRADE = re.compile(r"\b(pacman|yay|paru)\s+-S\w*u")
+
+
 def classify(command: str) -> str:
     cmd = command.strip().strip("`").strip()
     if not cmd:
@@ -44,6 +51,8 @@ def classify(command: str) -> str:
     for pat in _DESTRUCTIVE:
         if re.search(pat, cmd):
             return BLOCKED
+    if _PARTIAL_UPGRADE.search(cmd) and not _FULL_UPGRADE.search(cmd):
+        return BLOCKED
     # Any chaining or redirection makes "read-only" impossible to promise.
     if re.search(r"(;|&&|\|\||\|\s*(sudo|tee|sh|bash)|>|\$\()", cmd):
         return CHANGES

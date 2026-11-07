@@ -48,3 +48,26 @@ def test_missing_model_message():
 
     with pytest.raises(RuntimeError, match="ollama pull gemma3:4b"):
         ask_local_llm("p", model="gemma3:4b", host="http://x", chat=boom)
+
+
+def test_local_ollama_ignores_proxy(monkeypatch):
+    """httpx applies HTTP_PROXY to localhost; the local Ollama client must not."""
+    import ollama
+
+    from termbrain_voice import llm
+
+    seen = {}
+
+    class FakeClient:
+        def __init__(self, host, **kw):
+            seen["host"], seen["trust_env"] = host, kw.get("trust_env")
+
+        def chat(self, **kw):
+            return {"message": {"content": '{"answer": "ok", "steps": []}'}}
+
+    monkeypatch.setattr(ollama, "Client", FakeClient)
+    try:
+        llm.ask_local_llm("hi", "gemma3:4b", "http://localhost:11434")
+    except Exception:
+        pass  # parsing details are covered elsewhere; we only check the client setup
+    assert seen == {"host": "http://localhost:11434", "trust_env": False}

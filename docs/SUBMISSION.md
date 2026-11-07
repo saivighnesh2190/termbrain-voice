@@ -16,7 +16,7 @@ A voice-first assistant for the Linux terminal. You describe the problem in Telu
 
 ## How Gnani's models are used
 
-- **Prisma v3.0** via `POST /stt/v3`: `language_code=te-IN,en-IN` as hints, `format=codemix` so English tech terms stay in Latin script inside Telugu speech, `keyterms` with 37 Linux terms and a `topic` sentence to bias recognition of words like pacman, GRUB and PipeWire. `detected_language_code` decides the reply language.
+- **Prisma v3.0** via `POST /stt/v3`: `language_code=te-IN,en-IN` as hints, `format=codemix` so many English tech terms stay in Latin script inside Telugu speech (others come back transliterated, and the router handles both), `keyterms` with 37 Linux terms and a `topic` sentence to bias recognition of words like pacman, GRUB and PipeWire. `detected_language_code` decides the reply language.
 - **Timbre v3.0** via `POST /api/v1/tts/inference`: every v3.0 voice speaks all ten languages, so one voice (default Shivani) answers in whatever language the user spoke.
 - Client handles every documented error shape (STT envelope, auth/rate-limit `detail`, 422 validation, 504 upstream timeout) and backs off on the one-active-request 429.
 
@@ -25,8 +25,8 @@ A voice-first assistant for the Linux terminal. You describe the problem in Telu
 Each entry can win at most one award, so this entry is nominated for **Mixed Vibes**, the award for the best code-mixed voice build. Code-mixing isn't a feature added on top here; the whole product rests on it:
 
 - Users describe problems the way Telugu speakers actually talk about computers: Telugu sentences full of English tech words ("నా WiFi పని చేయడం లేదు", "Laptop చాలా slow గా ఉంది").
-- Prisma runs in `format=codemix` with Telugu and English hints, so English terms stay in Latin script inside Telugu speech instead of being transliterated, and Linux keyterms (pacman, GRUB, PipeWire) are biased in.
-- The router is built and evaluated on code-mixed speech: 22 of its 31 evaluation cases are Telugu-English code-mixed.
+- Prisma runs in `format=codemix` with Telugu and English hints, so many English terms stay in Latin script inside Telugu speech; the router also matches the Telugu-script forms Prisma sometimes returns (వైఫై, బూట్), and Linux keyterms (pacman, GRUB, PipeWire) are biased in.
+- The router is built and evaluated on code-mixed speech: 26 of its 35 evaluation cases are Telugu-English code-mixed, including 4 real Prisma v3.0 transcripts.
 - The reply follows the user's language, and Timbre speaks it in the same voice whether the answer is Telugu, English or mixed.
 
 The 60-second demo is built around one code-mixed request and its spoken answer, so it is also suitable for the Demo Day Drop award if the judges prefer to consider it there.
@@ -35,7 +35,7 @@ The 60-second demo is built around one code-mixed request and its spoken answer,
 
 - Reasoning: Ollama, default `gemma3:4b`, JSON mode, temperature 0.2, 8k context. Configurable.
 - Retrieval: BM25 over 12 curated Manjaro runbooks, with the router's topic as a prior and error lines from evidence added to the query.
-- Router: deterministic Telugu and English keyword matcher (31/31 top-1 on a 31-case development set).
+- Router: deterministic Telugu and English keyword matcher (35/35 top-1 on a 35-case development set).
 
 ## Privacy and safety
 
@@ -43,9 +43,10 @@ Only the audio clip and the final 1 to 3 sentence answer go to Gnani. Logs stay 
 
 ## Results
 
-- 50 automated tests, ruff-clean, CI on Python 3.10 and 3.13.
-- Router eval: 31/31 (22 Telugu code-mixed, 9 English), development set.
-- Per-stage latency (STT, evidence, LLM, TTS) printed every run and saved per session. *(Fill in your measured numbers after recording: e.g. STT 0.x s, evidence 0.x s, LLM x s on i7 U-series CPU, TTS 0.x s.)*
+- 52 automated tests, ruff-clean, CI on Python 3.10 and 3.13.
+- Router eval: 35/35 (26 Telugu code-mixed incl. 4 live Prisma transcripts, 9 English), development set.
+- The safety guard caught a real problem during live testing: a small local model suggested a partial upgrade (`pacman -Sy <pkg>`), which is now withheld.
+- Per-stage latency (STT, evidence, LLM, TTS) printed every run and saved per session. Measured live on 2026-11-07: Prisma 0.5 to 1.2 s per clip, evidence 0.02 s, Timbre 1.4 to 4.2 s depending on answer length. Local LLM: LLM_SECONDS s for gemma3:4b on an i7 U-series CPU (fill in from your run).
 
 ## What's next
 
@@ -67,7 +68,7 @@ How it works:
 
 My logs never leave the laptop. Only the voice clip and the one-line answer touch the cloud.
 
-50 tests, a Telugu/English router eval and CI on every push.
+52 tests, a Telugu/English router eval and CI on every push.
 
 60-second demo in this post. Code: https://github.com/saivighnesh2190/termbrain-voice
 

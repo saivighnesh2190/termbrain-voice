@@ -110,7 +110,10 @@ def ask_local_llm(prompt: str, model: str, host: str, chat: Optional[ChatFn] = N
     if chat is None:
         import ollama
 
-        client = ollama.Client(host=host)
+        # Ollama runs locally: ignore HTTP(S)_PROXY, which httpx would otherwise
+        # apply to localhost (common on campus/corporate networks) and get a 404.
+        local = re.search(r"//(localhost|127\.0\.0\.1|\[::1\])(:|/|$)", host) is not None
+        client = ollama.Client(host=host, trust_env=not local)
         chat = client.chat
     try:
         resp = chat(
